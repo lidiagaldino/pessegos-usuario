@@ -87,10 +87,24 @@ const selectPromocoes = async () => {
     }
 }
 
+const addFavorite = async (id, fav) => {
+
+    const sql = `update tbl_produto set favoritos = ${fav + 1} where id = ${id}`
+
+    const result = await prisma.$executeRawUnsafe(sql)
+
+    if (result) { 
+        return true
+    } else{
+        return false
+    }
+}
+
 module.exports = {
     selectAllPizzas,
     selectAllBebidas,
     selectPizzaById,
     selectPromocoes,
-    selectFavoritos
+    selectFavoritos,
+    addFavorite
 }

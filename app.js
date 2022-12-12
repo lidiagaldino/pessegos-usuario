@@ -20,7 +20,7 @@ app.use((request, response, next) => {
 
 const jsonParser = bodyParser.json()
 
-app.get('/v1/rooot/tipo/pizza', cors(), async (request, response, next) => {
+app.get('/v1/tipo/pizza', cors(), async (request, response, next) => {
  
     const dadosTipo = await controllerTipos.listarTiposPizza()
 
@@ -96,4 +96,28 @@ app.get('/v1/produtos/promocoes', cors(), async (request, response, next) => {
 
     response.status(dadosPromocoes.status)
     response.json(dadosPromocoes)
+})
+
+app.put('/v1/produtos/favoritos/:id', cors(), jsonParser, async (request, response, next) => {
+
+    let statusCode
+    let message
+
+    let id = request.params.id
+
+    if (id != undefined && id != '') {
+
+        const atualizarBebida = await controllerProdutos.adicionarFavorito(id)
+
+        statusCode = atualizarBebida.status
+        message = atualizarBebida.message
+    } else{
+        statusCode = 400
+        message = MESSAGE_ERROR.REQUIRED_ID
+    }
+             
+            
+
+    response.status(statusCode)
+    response.json(message)
 })
