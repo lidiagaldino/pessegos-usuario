@@ -3,7 +3,7 @@ const prisma = new PrismaClient()
 
 const selectAllPizzas = async () => {
 
-    const sql = `select tbl_produto.id as id_produto, tbl_pizza.id as id_pizza, tbl_produto.nome, tbl_produto.imagem, tbl_produto.descricao, tbl_produto.desconto, tbl_produto.favoritos, round(tbl_produto.preco, 2) as preco, tbl_tamanho.nome as tamamho, tbl_tipo_pizza.tipo  
+    const sql = `select tbl_produto.id as id_produto, tbl_pizza.id as id_pizza, tbl_produto.nome, tbl_produto.imagem, tbl_produto.descricao, tbl_produto.desconto, tbl_produto.favoritos, round(tbl_produto.preco, 2) as preco, tbl_tamanho.nome as tamamho, round(tbl_produto_tamanho.preco - (tbl_produto_tamanho.preco / tbl_produto_tamanho.desconto), 2) as preco_desconto, tbl_tipo_pizza.tipo  
         from tbl_pizza 
             inner join tbl_produto on tbl_pizza.id_produto = tbl_produto.id 
             inner join tbl_tamanho on tbl_tamanho.id = tbl_pizza.id_tamanho 
@@ -20,7 +20,7 @@ const selectAllPizzas = async () => {
 
 const selectAllBebidas = async () => {
 
-    const sql = `select tbl_produto.nome, tbl_produto.imagem, tbl_produto.descricao, tbl_produto.desconto, tbl_produto.favoritos, round(tbl_produto.preco, 2) as preco, tbl_tamanho.nome as tamamho, tbl_tipo_bebida.tipo, teor_alcoolico  
+    const sql = `select tbl_produto.nome, tbl_produto.imagem, tbl_produto.descricao, tbl_produto.desconto, tbl_produto.favoritos, round(tbl_produto.preco, 2) as preco, tbl_tamanho.nome as tamamho, tbl_tipo_bebida.tipo, round(tbl_produto_tamanho.preco - (tbl_produto_tamanho.preco / tbl_produto_tamanho.desconto), 2) as preco_desconto, teor_alcoolico  
         from tbl_bebida 
             inner join tbl_produto on tbl_bebida.id_produto = tbl_produto.id 
             inner join tbl_tamanho on tbl_tamanho.id = tbl_bebida.id_tamanho 
